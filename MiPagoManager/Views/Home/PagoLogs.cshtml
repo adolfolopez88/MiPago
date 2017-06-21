@@ -1,0 +1,45 @@
+﻿@model List<MiPago.Models.Log>
+@{
+    Layout = null;
+    
+}
+
+<div class="modal fade" id="modal-log-pagos" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="width: 950px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="modalLabel">Logs del pago</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <table class="table col-md-11">
+                        <tr>
+                            <th>Modulo</th>
+                            <th>Fecha</th>
+                            <th>Detalle</th>
+                        </tr>
+
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.Modulo</td>
+                                <td>@item.FechaCreacion</td>
+                                <td>@foreach (var item2 in item.DetalleDesencriptado) {
+                                    if (item2.Key != "TBK_MAC" && item2.Key != "TBK_ID_SESION")
+                                    {
+                                        <b>@item2.Key.ToLower():</b>@item2.Value.ToLower() <br />
+                                    }
+                                }
+                                </td>
+                            </tr>
+                        }
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+

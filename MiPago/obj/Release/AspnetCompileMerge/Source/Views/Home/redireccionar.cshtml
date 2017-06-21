@@ -1,0 +1,15 @@
+﻿@{
+    Layout = null;
+}
+
+<form id="form-webpay" action="@ViewBag.tbk.PathCgiBpPago" method="POST">
+    <input type="hidden" name="TBK_ORDEN_COMPRA" value="@ViewBag.tbk.TbkOrden" />
+    <input type="hidden" name="TBK_MONTO" value="@ViewBag.tbk.TbkMonto" />
+    <input type="hidden" name="TBK_TIPO_TRANSACCION" value="@ViewBag.tbk.TbkTipoTransaccion" />
+    <input type="hidden" name="TBK_URL_EXITO" value="@ViewBag.tbk.UrlExito" />
+    <input type="hidden" name="TBK_URL_FRACASO" value="@ViewBag.tbk.UrlFracaso" />
+</form>
+
+<script type="text/javascript">
+    document.getElementById("form-webpay").submit();
+</script>

@@ -1,0 +1,96 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_EmptyLayout.cshtml";
+    ViewBag.Title = "Exito";
+}
+<h2>Exito</h2>
+
+<div class="row">
+    <div class="col-md-9">
+
+        <div class="row">
+            <div class="col-md-3"><b>Numero de orden:</b></div>
+            <div class="col-md-3">@ViewBag.tbk_respuesta.TbkOrdenCompra</div>
+            <div class="col-md-3"><b>Monto:</b></div>
+            <div class="col-md-3">$@ViewBag.tbk_respuesta.TbkMonto</div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-3"><b>Código autorización:</b></div>
+            <div class="col-md-3">@ViewBag.tbk_respuesta.TbkCodigoAutorizacion</div>
+            <div class="col-md-3"><b>Numero finales tarjeta:</b></div>
+            <div class="col-md-3">@ViewBag.tbk_respuesta.TbkFinalNumeroTarjeta</div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-3"><b>Fecha transacción:</b></div>
+            <div class="col-md-3">@ViewBag.tbk_respuesta.TbkFechaMipago</div>
+            <div class="col-md-3"><b>Url sitio:</b></div>
+            <div class="col-md-3">@ViewBag.tbk_respuesta.TbkBaseUrl</div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-3"><b>Tipo de cuota:</b></div>
+            <div class="col-md-3">
+                @if (ViewBag.tbk_respuesta.TbkTipoPago == "VD")
+                {
+                    <span> Débito</span>
+                }
+                else if (ViewBag.tbk_respuesta.TbkTipoPago == "VC")
+                {
+                    <span> Cuotas normales</span>
+                }
+                else if (ViewBag.tbk_respuesta.TbkTipoPago == "SI" || ViewBag.tbk_respuesta.TbkTipoPago == "S2")
+                {
+                    <span>Sin interés</span>
+                }
+                else if (ViewBag.tbk_respuesta.TbkTipoPago == "VN")
+                {
+                    <span>Sin Cuotas</span>
+                }
+                else if (ViewBag.tbk_respuesta.TbkTipoPago == "CI")
+                {
+                    <span> Cuotas Comercio</span>
+                }
+                </div>
+            <div class="col-md-3"><b>Numero Cuotas:</b></div>
+            <div class="col-md-3">@ViewBag.tbk_respuesta.TbkNumeroCuotas</div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-3"><b>Id transacción:</b></div>
+            <div class="col-md-3">@ViewBag.tbk_respuesta.TbkIdTransaccion</div>
+        </div>
+
+    </div>
+</div>
+
+<br>
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-terminos">
+    Política de devoluciones y/o reembolsos
+</button>
+
+<div class="modal fade" id="modal-terminos" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Derechos del usuario</h4>
+            </div>
+            <div class="modal-body">
+                <strong>Protección de sus datos personales</strong>
+                <p>
+                    Protección de sus datos personales Los datos personales que entregue el Usuario sólo podrán ser utilizados por Cristian Becerra Producciones EIRL., para perfeccionar contratos, recibir pagos y mejorar La labor de información y comercialización de los servicios con el Usuario; y no podrán ser entregados a terceros no relacionados con Cristian Becerra Producciones EIRL., Dicha entrega será revocable por el usuario. El usuario dispondrá siempre de los derechos de información, rectificación y cancelación de sus Datos personales conforme a la Ley 19.628 sobre protección de datos de carácter personal. Para ejercer esos derechos, efectuar dicha revocación O modificar la información personal registrada en el sitio, el usuario debe ponerse en contacto con nuestra central telefónica al 223310063.
+                </p>
+                <strong>Política de devoluciones y/o reembolsos</strong>
+                <p>
+                    En el evento que el cliente se desista del servicio contratado y reclame la devolución de lo pagado, Cristian Becerra Producciones EIRL., accederá, solo en el caso que durante el plazo de vigencia del servicio, el Cliente no haya Hecho uso de éste.
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+

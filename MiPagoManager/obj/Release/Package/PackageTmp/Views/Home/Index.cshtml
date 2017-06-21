@@ -1,0 +1,109 @@
+﻿@model MiPagoManager.Models.BuscarPagosViewModel
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+@{
+    ViewBag.Title = "Home Page";
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/app")
+}
+
+<h2>Buscar Pagos</h2>
+<h4>Ingrese los datos de su busqueda.</h4>
+<hr />
+@using (Html.BeginForm("FiltrosBuscarPagos", "Home", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+<div class="row"> 
+
+        @Html.ValidationSummary("", new { @class = "text-danger" })
+
+        <div class="form-group col-md-2">
+            <div class="col-md-11">
+                @Html.LabelFor(m => m.FechaInicio, new { @class = "control-label" })
+                @Html.TextBoxFor(m => m.FechaInicio, new { @class = "form-control datepicker", @value = Model.FechaInicio })
+            </div>
+        </div>
+
+        <div class="form-group col-md-2">
+            <div class="col-md-11">
+                @Html.LabelFor(m => m.FechaFin, new { @class = "control-label" })
+                @Html.TextBoxFor(m => m.FechaFin, new { @class = "form-control datepicker", @value = Model.FechaFin })
+            </div>
+        </div>
+
+        <div class="form-group col-md-2">   
+            <div class="col-md-11">
+                @Html.LabelFor(m => m.Estado, new { @class = "control-label" })
+                @Html.DropDownListFor(m => m.Estado, Model.EstadoList, new { @class = "form-control" })
+            </div>
+        </div>
+
+        <div class="form-group col-md-2">
+            <div class="col-md-11">
+                @Html.LabelFor(m => m.AppOrdenId, new { @class = "control-label" })
+                @Html.TextBoxFor(m => m.AppOrdenId, new { @class = "form-control", @value = Model.AppOrdenId })
+            </div>
+        </div>
+
+        @if (User.IsInRole("Administrador"))
+        {
+            <div class="form-group col-md-3">
+                @Html.LabelFor(m => m.Usuarios, new { @class = "control-label" })<br>
+                @Html.ListBoxFor(m => m.Usuarios, Model.UsuariosList, new { @class = "form-control multiselect-busqueda", @multiple = "multiple" })
+            </div>
+        }
+</div>
+<div class="row">
+    <div class="form-group col-md-5">
+        <div class="btn-group" role="group">
+            <button type="submit" class="btn btn-default">Buscar</button>
+            <a href="/?excel=1" class="btn btn-default">Excel</a>
+        </div>
+    </div>
+</div>
+}
+
+<div class="row">
+  
+    <table class="table">
+        <tr>
+            <th>Cliente</th>
+            <th>Orden Comercio</th>
+            <th>Fecha</th>
+            <th>Estado</th>
+            <th>Monto</th>
+            <th>Detalles</th>
+        </tr>
+
+        @foreach (var item in Model.Pagos)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.ApplicationUser.Email)</td>
+                <td>@Html.DisplayFor(modelItem => item.AppOrdenId)</td>
+                <td>@Html.DisplayFor(modelItem => item.FechaCreacion)</td>
+                <td>@if (!string.IsNullOrEmpty(item.FechaPago.ToString()))
+                { <span class="label label-success">Pagado</span> }
+                else
+                {  <span class="label label-warning">pendiente</span> }</td>
+                <td>$@string.Format("{0:n0}", item.Monto)</td>
+                <td><a href="/Home/PagoLogs/?pago_id=@item.Id" class="btn btn-primary btn-xs btn-log-pago modal-ajax" data-toggle="modal" data-target="#modal-log-pagos"> Ver Detalle </a></td>
+            </tr>
+        }
+
+        <tr>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th>$@string.Format("{0:n0}", Model.TotalMonto)</th>
+            <th></th>
+        </tr>
+    </table>
+</div>
+<hr />
+
+<b>Registros Total:</b> @Model.TotalRegistros &nbsp; <b>Pagados:</b> @Model.TotalPagados &nbsp; <b>Pendientes:</b> @Model.TotalPendientes </br>
+Pagina @(Model.Pagos.PageCount < Model.Pagos.PageNumber ? 0 : Model.Pagos.PageNumber) de @Model.Pagos.PageCount
+@Html.PagedListPager(Model.Pagos, page => Url.Action("Index",
+    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+

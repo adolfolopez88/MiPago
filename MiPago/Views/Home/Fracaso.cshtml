@@ -1,0 +1,24 @@
+﻿@{
+    Layout = "~/Views/Shared/_EmptyLayout.cshtml";
+    ViewBag.Title = "Fracaso";
+}
+
+<h2>Transacción rechazada, vuelve a intentarlo.</h2>
+
+<h4> OC N*@ViewBag.tbk_orden_compra <br /> las posibles causas son: </h4>
+
+<div class="alert alert-danger" role="alert">
+    <p><b>1. Error en el ingreso de los datos su tarjeta de crédito o débito (fecha y/o códeigo de seguridad).</b> </p>
+</div>
+
+<div class="alert alert-danger" role="alert">
+    <p><b>2. Tarjeta aún no habilitada en el sistema financiero.</b> </p>
+</div>
+
+<div class="alert alert-danger" role="alert">
+    <p ><b>3. Su tarjeta de crédito o débito no cuenta con el cupo necesario para cancelar la compra.</b> </p>
+</div>
+
+<a href="@ViewBag.pago_url" class="btn btn-primary" type="submit">Volver</a>
+
+
